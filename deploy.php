@@ -4,10 +4,10 @@ namespace Deployer;
 require 'recipe/common.php';
 
 // Project name
-set('application', 'carpooling');
+set('application', '{APP_NAME}');
 
 // Project repository
-set('repository', 'git@gitlab.com:mouhcinemimya/covoiturage-v0.git');
+set('repository', '{GIT REPOSITOY}');
 
 // [Optional] Allocate tty for git clone. Default value is false.
 set('git_tty', true);
@@ -28,8 +28,8 @@ set('writable_use_sudo', false);
 // Hosts
 
 host('142.93.99.47')
-    ->user('carpooling_user')
-    ->set('deploy_path', '/srv/carpooling.ma/src');
+    ->user('{LINUX USER}')
+    ->set('deploy_path', '{DESTINATION PATH}');
 
 
 // Tasks
@@ -37,14 +37,14 @@ host('142.93.99.47')
 desc('Deploy your project');
 // Tasks
 task('docker:vendors', function () {
-    run('docker exec carpooling_ma composer install -d release');
+    run('docker exec {CONTAINER NAME} composer install -d release');
 });
 task('docker:storage:link', function () {
-    run('docker exec carpooling_ma php release/artisan storage:link');
+    run('docker exec {CONTQINER NAME} php release/artisan storage:link');
 });
 
 task('docker:cache:clear', function () {
-    run('docker exec carpooling_ma php release/artisan cache:clear');
+    run('docker exec {CONTAINER NAME} php release/artisan cache:clear');
 });
 
 task('deploy', [
